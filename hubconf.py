@@ -142,6 +142,34 @@ _MODEL_CONFIGS = {
     ),
 }
 
+import importlib
+def init_module(
+    folder,
+    checkpoint,
+    module_name,
+    model_kwargs,
+    device,
+    cfgs_data=None,
+    wrapper_kwargs=None,
+    action_dim=None,
+    proprio_dim=None,
+    preprocessor=None,
+):
+    """
+    Build (frozen) model and initialize from pretrained checkpoint
+    """
+    model = importlib.import_module(f"{module_name}").init_module(
+        folder=folder,
+        checkpoint=checkpoint,
+        model_kwargs=model_kwargs,
+        device=device,
+        action_dim=action_dim,
+        proprio_dim=proprio_dim,
+        preprocessor=preprocessor,
+        cfgs_data=cfgs_data,
+        wrapper_kwargs=wrapper_kwargs,
+    )
+    return model
 
 def _load_model_with_config(config_path, model_name, device="cuda:0", pretrained=True):
     """
@@ -172,7 +200,8 @@ def _load_model_with_config(config_path, model_name, device="cuda:0", pretrained
     from app.plan_common.datasets import get_data_stats
     from app.plan_common.datasets.preprocessor import Preprocessor
     from app.plan_common.datasets.transforms import make_inverse_transforms, make_transforms
-    from evals.simu_env_planning.eval import init_module
+    #use init_module defined above instead to avoid unnecessary env imports
+    #from evals.simu_env_planning.eval import init_module
     from src.utils.yaml_utils import expand_env_vars
 
     logging.basicConfig()
