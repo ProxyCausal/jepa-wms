@@ -28,7 +28,7 @@ model_kwargs:
     use_activation_checkpointing: false
     action_conditioning: token
     proprio_encoding: token
-    num_frames_pred: 512
+    num_frames_pred: 16
     visual_encoder:
       enc_type: vjepa
       enc_version: v2_open
@@ -39,7 +39,7 @@ model_kwargs:
       enc_use_rope: true
       enc_name: vit_giant_xformers
       use_sdpa_enc: true
-      num_frames_enc: 512
+      num_frames_enc: 16
       uniform_power: true
     action_encoder:
       action_tokens: 1
